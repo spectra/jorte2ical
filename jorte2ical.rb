@@ -12,8 +12,8 @@ if ARGV.length != 1
 end
 
 def to_ical(dtstart, dtend, tmstart, tmend, zone)
-	dtstart0 = DateTime.parse("#{dtstart} #{tmstart} #{zone}").to_time
-	dtend0 = DateTime.parse("#{dtend} #{tmend} #{zone}").to_time
+	dtstart0 = DateTime.parse("#{dtstart} #{tmstart} #{zone}")
+	dtend0 = DateTime.parse("#{dtend} #{tmend} #{zone}")
 
 	if tmstart.nil? and tmend.nil?
 	# If not tmstart and not tmend use Date
@@ -25,8 +25,8 @@ def to_ical(dtstart, dtend, tmstart, tmend, zone)
 			dtend0 = dtstart0 + 3600
 		end
 		# If tmstart and tmend use both
-		ical_dtstart = Icalendar::Values::DateTime.new(dtstart0)
-		ical_dtend = Icalendar::Values::DateTime.new(dtend0)
+		ical_dtstart = Icalendar::Values::DateTime.new(dtstart0.to_time)
+		ical_dtend = Icalendar::Values::DateTime.new(dtend0.to_time)
 	end
 
 	return ical_dtstart, ical_dtend
