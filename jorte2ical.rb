@@ -11,9 +11,9 @@ if ARGV.length != 1
 	exit 0
 end
 
-def to_ical(dtstart, dtend, tmstart, tmend)
-	dtstart0 = DateTime.parse("#{dtstart} #{tmstart}").to_time
-	dtend0 = DateTime.parse("#{dtend} #{tmend}").to_time
+def to_ical(dtstart, dtend, tmstart, tmend, zone)
+	dtstart0 = DateTime.parse("#{dtstart} #{tmstart} #{zone}").to_time
+	dtend0 = DateTime.parse("#{dtend} #{tmend} #{zone}").to_time
 
 	if tmstart.nil? and tmend.nil?
 	# If not tmstart and not tmend use Date
@@ -47,7 +47,9 @@ jorte_csv.each do |row|
 	rrule=row.values_at[9]
 	content=row.values_at[11]
 
-	ical_dtstart, ical_dtend = to_ical(dtstart, dtend, tmstart, tmend)
+	zone = Time.now.zone
+
+	ical_dtstart, ical_dtend = to_ical(dtstart, dtend, tmstart, tmend, zone)
 
 	cal.event do |e|
 		e.dtstart=ical_dtstart
