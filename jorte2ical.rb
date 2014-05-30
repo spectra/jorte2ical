@@ -20,13 +20,15 @@ def to_ical(dtstart, dtend, tmstart, tmend, zone)
 		ical_dtstart = Icalendar::Values::Date.new(dtstart0)
 		ical_dtend = Icalendar::Values::Date.new(dtend0)
 	else
+		dtstart0 = dtstart0.to_time
+		dtend0 = dtend0.to_time
 		if ! tmstart.nil? and tmend.nil?
 			# If tmstart but not tmend, tmend = tmstart + 1h
 			dtend0 = dtstart0 + 3600
 		end
 		# If tmstart and tmend use both
-		ical_dtstart = Icalendar::Values::DateTime.new(dtstart0.to_time)
-		ical_dtend = Icalendar::Values::DateTime.new(dtend0.to_time)
+		ical_dtstart = Icalendar::Values::DateTime.new(dtstart0)
+		ical_dtend = Icalendar::Values::DateTime.new(dtend0)
 	end
 
 	return ical_dtstart, ical_dtend
